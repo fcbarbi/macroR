@@ -42,7 +42,6 @@ adjvalues <- function( values ){
    value <- sapply( values, adjvalue, simplify = TRUE)
    as.vector( value )
 }
-
 adjvalue <- function(v) {
   if (!is.numeric(v)) {
     v <- gsub("\\.",'',v ) 
@@ -57,3 +56,26 @@ adjvalue <- function(v) {
 }
 ```
 
+### remove_outliers( num, na.rm = TRUE, ... )
+Remove outlier values, those below 1% and above 99% quantiles, from a numeric vector. 
+
+Example:
+```
+set.seed(123)
+x <- rnorm(100)
+x <- c(-10, x, 10)
+y <- remove_outliers(x)
+par(mfrow = c(1, 2))
+boxplot(x)
+boxplot(y)
+```
+Implementation:
+```
+remove_outliers <- function(x, na.rm = TRUE, ...) {
+  qnt <- quantile(x, probs=c(.01, .99), na.rm = na.rm, ...)  
+  y <- x
+  y[x < qnt[1]] <- NA
+  y[x > qnt[2]] <- NA
+  y
+}
+```
