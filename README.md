@@ -14,7 +14,7 @@ Example:
 gen_eviews_time("1947Q3","1948Q02") # returns "1947Q3", "1947Q4", "1948Q1", "1948Q2"
 gen_eviews_time("1947Y1",nobs=5) # returns "1947", "1948", "1949", "1950", "1951"
 ```
-Implementation: [link](https://github.com/fcbarbi/R_Stuff/blob/master/gentime.md)
+Implementation: [link](https://github.com/fcbarbi/R_Stuff/blob/master/gen_eviews_time.md)
 
 ### dlog( ts ) 
 
@@ -23,8 +23,8 @@ Negative and zeros generate NaN, so you may want to transform **ts** into an ind
 
 Example: 
 ```
-asset_return <- dlog(asset_price)
-dlcpi <- dlog(cpi) # DL informs on the transformation of the series 
+asset_return <- dlog(asset_price) # I(1) data made into I(0)
+dlcpi <- dlog(cpi) # DL prefix tips on the transformation  
 ```
 Implementation:
 ```
@@ -37,7 +37,7 @@ dlog <- function(x) {
 ```
 
 ### clean_num_values( dirty_strings )
-Convert **dirty_strings** with spaces, points and commas ("123 456" and "123.456,78") to numeric.
+Converts **dirty_strings** with spaces, points and commas ("123 456" and "123.456,78") into floating numbers.
 The decimal and thousand separators may have to be adjusted accordingly. This is useful when importing values from textual sources (scrapping web pages, for example) that use different number formatting rules. 
 
 Examples:
