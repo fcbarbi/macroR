@@ -1,6 +1,10 @@
 ```
-gentime <- function( start, end=NULL, qobs=NULL )
+gen_eviews_time <- function( start, end=NULL, qobs=NULL )
 {
+
+# Generate a time vector as string in Eviews format
+# gen_eviews_time("1947Q3","1948Q02") # 1947Q3, 1947Q3, 1948Q1, 1948Q2
+# gen_eviews_time("1947q1",qobs=3) # 1947Q1, 1947Q2, 1947Q3
 
   start_y <- substr(start,1,4)
   start_p <- toupper(substr(start,5,5))
