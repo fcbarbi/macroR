@@ -1,9 +1,9 @@
 
-## "Stuff" (ie.small tweaks) for R programming
+## "Stuff" (small tweaks) for R programming
 
-A lot of the data scientist's time is spent on collecting, cleaning and formatting data from different sources. These are routines I use frequently, they may speed up your work with little adjustments. If you have issues drop me a line at fcbarbi AT gmail.com. Enjoy! 
+A lot of the data scientist's time is spent on collecting, cleaning and formatting data from different sources. These are routines I use frequently, they may speed up your work with little adjustments or serve as inspiration. If you have issues drop me a line at fcbarbi AT gmail.com. Enjoy! 
 
-### gen_ev_time( start, end=NULL, qobs=NULL )
+### gen_eviews_time( start, end=NULL, qobs=NULL )
 
 Generates a time vector as string in **Eviews** format. Useful when exporting data to Eviews.  
 Supports Month, Quarter, Semester and Year frequencies.
@@ -11,23 +11,10 @@ Start and end are structured as YYYYFSS, where YYYY is year, F is frequency (M, 
 
 Example: 
 ```
-gen_ev_time("1947Q3","1948Q02") # returns "1947Q3", "1947Q4", "1948Q1", "1948Q2"
-gen_ev_time("1947Y1",nobs=5) # returns "1947", "1948", "1949", "1950", "1951"
+gen_eviews_time("1947Q3","1948Q02") # returns "1947Q3", "1947Q4", "1948Q1", "1948Q2"
+gen_eviews_time("1947Y1",nobs=5) # returns "1947", "1948", "1949", "1950", "1951"
 ```
 Implementation: [link](https://github.com/fcbarbi/R_Stuff/blob/master/gentime.md)
-
-### ev_posix( eviews_strings )
-
-Converts an Eviews formated string into POSIX. 
-
-Example: 
-```
-ev_posix("1947Q2") # "1947-04-01" 
-```
-Implementation:
-```
-(TBC)
-```
 
 ### dlog( ts ) 
 
@@ -49,21 +36,37 @@ dlog <- function(x) {
 } 
 ```
 
-### clean_num_values( strings, dec_sep=",", k_sep=c("."," ") )
-Convert strings with spaces, points and commas ("123 456" and "123.456,78") to numeric.
-The decimal and thousand separators can be passed as parameters. This is useful when importing values from textual sources (scrapping web pages, for example) that use different number formatting rules. 
+### clean_num_values( dirty_strings )
+Convert **dirty_strings** with spaces, points and commas ("123 456" and "123.456,78") to numeric.
+The decimal and thousand separators may have to be adjusted accordingly. This is useful when importing values from textual sources (scrapping web pages, for example) that use different number formatting rules. 
 
 Examples:
 ```
-clean_num_values( "456.000" ) # 456000
-clean_num_values( "456,000" ) # 456
-clean_num_values( "123 456.789,0001" ) # 123456789.0001
-clean_num_values( " " ) # 0 as it must be a number 
-clean_num_values( c("34 567", 451) )  # 34567, 451
+dirty <- c( "34.567,89", "34 567", 451, "", "123 456.789,0001" )
+clean_num_values(dirty[1])
+clean_num_values(dirty)
 ```
 Implementation:
 ```
-(TBC)
+clean_num_values <- function( dirty )
+{
+   clean_this <- function( v ) {
+     if (!is.numeric(v)) {
+       v <- gsub("\\.",'',v )  # thousand separator
+       v <- gsub(" ",'',v ) 
+       v <- as.numeric( gsub(',','.',v) )   # decimal separator
+     }
+     if (is.na(v)) v <- 0
+     v
+   }
+
+   if (length(dirty)>1) 
+	 clean <- as.numeric( lapply( dirty, clean_this ))
+   else	
+    clean <- clean_this(dirty)
+	
+   clean	
+}
 ```
 
 ### remove_outliers( num, na.rm = TRUE, ... )
