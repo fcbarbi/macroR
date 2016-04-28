@@ -1,0 +1,11 @@
+.Rproj.user
+.Rhistory
+.RData
+*.o
+*.so
+*.dll
+*.Rproj
+tsworkflow.Rproj
+.project
+inst/doc
+dev

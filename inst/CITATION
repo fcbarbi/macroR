@@ -1,0 +1,9 @@
+  bibentry(
+    bibtype = "Manual",
+    title = "{tsworkflow}: Functions to streamline workflow in time series analysis.",
+    author = "Barbi, F.C.",
+    year = sub("-.*", "", meta$Date),
+    note = sprintf("R package version %s", meta$Version),
+    url = "http://cran.r-project.org/package=tsworkflow",
+    key = "tsworkflow"
+  )
