@@ -1,0 +1,14 @@
+Package: tsworkflow
+Title: Functions to streamline workflow in time series analysis
+Version: 0.000.001
+Authors@R: person("Fernando", "Barbi", email = "fcbarbi@gmail.com", role = c("aut", "cre"))
+Author: Fernando Barbi [aut,cre]
+Maintainer: Fernando Barbi <fcbarbi@gmail.com>
+Description: Functions for handling ts (time series) and zoo objects to: clean outliers, generate dummies, complete series and generate Eviews-formatted dates.
+URL: https://github.com/fcbarbi/tsworkflow
+Depends: R (>= 3.2.4)
+License: GPL
+LazyData: true
+RoxygenNote: 5.0.1
+Imports: stats, zoo
+Suggests: testthat
