@@ -39,18 +39,6 @@ tsDummy <- function( start, end, frequency=12 , period=NULL, dates=NULL ) {
   d
 }
 
-# dummy.ts <- function( ts , period=NULL, points=NULL ) {
-#   dts <- ts.dummy( start=tsp[1],end=tsp[2],freq=tsp[3],period=period,points=points )
-#   dts
-# }
-#
-# gdp <- ts( 0.1*seq(1:(16*4))+rnorm(16*4,sd=.1),start=c(2000,1), end=c(2015,4), freq=4)
-# gdp <- window( gdp,start=c(2008,10),end=c(2009,3), freq=4 ) -0.5
-# plot(gdp)
-#
-# dcrisis2 <- dummy.ts( gdp, period=list(c(2008,3),c(2009,2)) )
-
-# eof
 
 
 
