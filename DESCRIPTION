@@ -1,6 +1,6 @@
 Package: tsworkflow
 Title: Functions to streamline workflow in time series analysis
-Version: 0.000.001
+Version: 0.000.002
 Authors@R: person("Fernando", "Barbi", email = "fcbarbi@gmail.com", role = c("aut", "cre"))
 Author: Fernando Barbi [aut,cre]
 Maintainer: Fernando Barbi <fcbarbi@gmail.com>

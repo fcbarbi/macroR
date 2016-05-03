@@ -6,8 +6,8 @@
 #' @details The index is based in 100. Reference is by default the first observation.  
 #'
 #' @param x         Time series to be converted to index.
-#' @param base       (optional, default is 100). 
-#' @param reference  (optional, default is 1) Index of the observaton to be used as reference.
+#' @param base       (optional) Default is 100. 
+#' @param reference  (optional) Index of the observation to be used as reference. Default is 1 (first).
 #'
 #' @export pVarToIndex
 #'

@@ -5,8 +5,8 @@
 #' @details If using a monetary series be sure to deflate it before indexing. 
 #' 
 #' @param x         Time-indexed data to convert, must be a ts or zoo object.
+#' @param base      (Optional) Default is 100.
 #' @param reference (Optional) Observation to be used as proportions are calculated. 
-#' @param base      (Optional) Defaults to 100.
 #' @return          Time series (ts or zoo) with the index. 
 #' 
 #' @export
@@ -17,7 +17,7 @@
 #' ip <- numToIndex( production ) # industrial production index 
 #
 # implements 'reference' but uses a proportional rule to calculate the result
-numToIndex <- function( x, reference=1, base=100 ) {
+numToIndex <- function( x, base=100, reference=1 ) {
   
   if (!is.ts(x) & !zoo::is.zoo(x)) 
     stop("toIndex must be called with a ts or zoo object.")
