@@ -26,9 +26,15 @@
 #' require(tseries)
 #' data(USeconomic,package="tseries")
 #' data <- data.frame( USeconomic ) 
+#' 
 #' dft1 <- urTable( data, tests=c("adf","pp","kpss"), file="US.csv" )
+#' 
 #' dft2 <- urTable( data, tests=c("pp","kpss"), order=2, file="US.tex", format="latex" )
 #' 
+#' # Even series with missing observations can be tested
+#' bad <- data.frame( var1=rnorm(100), var2=cumsum(rnorm(100)) ) 
+#' bad[seq(95,100),"var1"] <- bad[1,"var2"] <- bad[2,"var2"] <- NA
+#' dft3 <- urTable( bad )
 
 urTable <- function( df ,tests=c("adf","pp","kpss"), order=1, file=NULL, format="csv" ){
 
@@ -62,7 +68,8 @@ urTable <- function( df ,tests=c("adf","pp","kpss"), order=1, file=NULL, format=
   for (i in intorder)  
    for (test in tests)
     for (series in colnames(df)) { 
-      data <- df[[series]]
+      data <- ts(df[[series]])
+      data <- macror::tsComplete(data)
       if (i>0) data <- diff(data,i)
       col <- paste0(test,"(",i,")")  # cols = test(intorder) as in "adf(0)" or "kpss(2)"
       if (test=="adf")   dft[series,col] <- tseries::adf.test(data)$p.value

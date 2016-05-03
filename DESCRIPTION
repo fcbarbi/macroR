@@ -1,6 +1,6 @@
 Package: macror
 Title: Functions for Macroeconomic time series analysis in R 
-Version: 0.00.004
+Version: 0.00.005
 Authors@R: person("Fernando", "Barbi", email = "fcbarbi@gmail.com", role = c("aut", "cre"))
 Author: Fernando Barbi [aut,cre]
 Maintainer: Fernando Barbi <fcbarbi@gmail.com>
