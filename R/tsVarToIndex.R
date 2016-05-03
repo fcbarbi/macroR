@@ -26,12 +26,13 @@
 tsVarToIndex <- function( x, base=100, reference=1 ) {
   
   if (!is.ts(x) & !zoo::is.zoo(x))
-    stop("toIndex must be called with a ts or zoo object.")
+    stop("tsVarToIndex must be called with a ts or zoo object.")
   if (!is.vector(reference) | !is.numeric(reference)) 
     stop("reference is the numeric position in x or a date as in c(2008,1).")
   
-  res <- base*c(1,cumprod(1+x[-length(x)]/100))
-  res <- round( res,4 )  # round to 4 decimal places 
+  xc <- zoo::coredata(x)
+  res <- base*c(1,cumprod(1+xc[-length(x)]/100))
+  res <- round( res,4 )  # rounding to 4 decimal places 
   if (is.ts(x))   
     res <- ts( data=res, start=start(x),frequency=frequency(x))
   else 

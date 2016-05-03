@@ -7,8 +7,9 @@
 #' @details Supports ADF, PP and KPSS unit root tests. 
 #'
 #' @param df        Dataframe with series to test
-#' @param order     Maximum order of integration, I(?), to test starting from I(0). It can be\code{c(0,1,2)}.
-#' @param structure List of models to test, can be \code{c("c","ct","nc")}: \code{"c"} assumes model with intercept,"ct" assumes intercept and deterministic trend,"nc" assumes no intercept and no trend.
+#' @param tests     List of tests to be performed, by default tests are \code{c("adf","pp","kpss")}. 
+#' @param order     Maximum order of integration to test, usually noted as I(?). It can be \code{c(0,1,2)}.
+# @param structure List of models to test, can be \code{c("c","ct","nc")}: \code{"c"} assumes model with intercept,"ct" assumes intercept and deterministic trend,"nc" assumes no intercept and no trend.
 #' @param file      (Optional) Filename to be generated according to \code{format}.
 #' @param format    (Optional) Format of the output table, can be \code{c("csv","latex")}. Defaults to \code{"txt"}.
 #'
@@ -21,7 +22,10 @@
 #' @export
 #' 
 #' @examples
-#' data <- data.frame( USeconomic ) #from tseries 
+#' 
+#' require(tseries)
+#' data(USeconomic,package="tseries")
+#' data <- data.frame( USeconomic ) 
 #' dft1 <- urTable( data, tests=c("adf","pp","kpss"), file="US.csv" )
 #' dft2 <- urTable( data, tests=c("pp","kpss"), order=2, file="US.tex", format="latex" )
 #' 

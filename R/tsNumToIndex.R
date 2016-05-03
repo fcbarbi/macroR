@@ -1,5 +1,5 @@
 #' @title Converts a numeric series to an index using the first observation as reference.
-#' @name numToIndex
+#' @name tsNumToIndex
 #' 
 #' @description Converts a numeric series to an index using the first observation as reference.
 #' @details If using a monetary series be sure to deflate it before indexing. 
@@ -10,28 +10,20 @@
 #' @return          Time series (ts or zoo) with the index. 
 #' 
 #' @export
-#' @seealso \code{\link{pVarToIndex}}
+#' @seealso \code{\link{tsVarToIndex}}
 #' @examples
 #' # Production averages 1254 units per month  
 #' production <- ts( rnorm(30*12,mean=1254,sd=425),start=c(1980,1),freq=12)
-#' ip <- numToIndex( production ) # industrial production index 
+#' ip  <- tsNumToIndex( production ) # industrial production index 
+#' ip2 <- tsNumToIndex( production, reference = c(1992,6) ) # rebase for June 1992
 #
 # implements 'reference' but uses a proportional rule to calculate the result
-numToIndex <- function( x, base=100, reference=1 ) {
+tsNumToIndex <- function( x, base=100, reference=1 ) {
   
   if (!is.ts(x) & !zoo::is.zoo(x)) 
-    stop("toIndex must be called with a ts or zoo object.")
+    stop("tsNumToIndex must be called with a ts or zoo object.")
   if (!is.vector(reference) | !is.numeric(reference)) 
     stop("reference is the numeric position in x or a date as in c(2008,1).")
-  
-#   if (zoo::is.zoo(x)) {
-#     index_x <- zoo::index(x)
-#     frequency_x <- zoo::frequency(x)
-#   }
-#   else {
-    index_x <- zoo::index(x)
-    frequency_x <- frequency(x)
-  # }  
   
   position <- 1L
   if (is.null(reference))
@@ -39,9 +31,8 @@ numToIndex <- function( x, base=100, reference=1 ) {
   else {
     if (length(reference)>=2L) {
       # is the reference date inside x ?
-      refnum <- reference[1]+(reference[2]-1)/frequency_x
-      position <- which(abs(refnum-index_x)<1e-6)
-      #position <- window(x,start=reference,end=reference)
+      refnum <- reference[1]+(reference[2]-1)/frequency(x)
+      position <- which(abs(refnum-zoo::index(x))<1e-6)
       if (length(position)==0L) { 
         warning("reference out of range, assuming the first") 
         position <- 1L 
@@ -59,10 +50,10 @@ numToIndex <- function( x, base=100, reference=1 ) {
     refx <- zoo::coredata(refx)
   
   res <- base*(1+(x-refx)/refx)
-  res <- round( res,4 )
+  res <- round( res,4 ) # rounding to 4 decimal places 
   if (is.ts(x))   
-    res <- ts( data=res, start=start(x),frequency=frequency(x))
+    res <- ts( data=res, start=start(x),frequency=frequency(x) )
   else 
-    res <- zoo::zooreg( data=res, start=start(x),frequency=frequency(x))
+    res <- zoo::zooreg( data=res, start=start(x),frequency=frequency(x) )
   res 
 }

@@ -13,7 +13,7 @@
 # @importFrom zoo iszoo 
 # @importFrom zoo zooreg
 #'
-#' @seealso \code{\link{pVarToIndex}}
+#' @seealso \code{\link{tsVarToIndex}}
 #'
 #' @examples
 #' CPI <- ts( rnorm(10,mean=100) )
@@ -56,10 +56,12 @@ dlog <- function( data, lag = 1 ) {
 # dpx <- deltaPX(x)
 # all(abs(dlx-dpx)<1e-3)
 deltaPX <- function(x,lag=1,fillup=NA) {
+  
   dx <- rep(fillup,length(x))
   cx <- zoo::coredata(x)
   for (i in (lag+1):length(x)) 
     dx[i] <- (cx[i]-cx[i-lag])/cx[i-lag]
+  
   if (is.ts(x)) res <- ts( data=dx, start=start(x),frequency=frequency(x))
   if (zoo::is.zoo(x)) res <- zoo::zooreg( data=dx, start=start(x),frequency=frequency(x))
   res 

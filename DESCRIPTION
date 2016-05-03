@@ -1,13 +1,13 @@
-Package: tsworkflow
-Title: Functions to streamline workflow in time series analysis
-Version: 0.000.002
+Package: macror
+Title: Functions for Macroeconomic time series analysis in R 
+Version: 0.00.004
 Authors@R: person("Fernando", "Barbi", email = "fcbarbi@gmail.com", role = c("aut", "cre"))
 Author: Fernando Barbi [aut,cre]
 Maintainer: Fernando Barbi <fcbarbi@gmail.com>
 Description: Functions for handling ts (time series) and zoo objects to: create index from percentage variation, create dummy series, complete series and generate Eviews-formatted dates.
-URL: https://github.com/fcbarbi/tsworkflow
+URL: http://www.macror.org 
 Depends: R (>= 3.2.4)
-Imports: stats, zoo
+Imports: stats, zoo, tseries, xtable 
 Suggests: testthat
 License: GPL (>=2)
 LazyData: true
