@@ -32,8 +32,14 @@ Supports ADF, PP and KPSS unit root tests.
 require(tseries)
 data(USeconomic,package="tseries")
 data <- data.frame( USeconomic ) 
+
 dft1 <- urTable( data, tests=c("adf","pp","kpss"), file="US.csv" )
+
 dft2 <- urTable( data, tests=c("pp","kpss"), order=2, file="US.tex", format="latex" )
 
+# Even series with missing observations can be tested
+bad <- data.frame( var1=rnorm(100), var2=cumsum(rnorm(100)) ) 
+bad[seq(95,100),"var1"] <- bad[1,"var2"] <- bad[2,"var2"] <- NA
+dft3 <- urTable( bad )
 }
 
