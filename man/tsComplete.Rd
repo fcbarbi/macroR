@@ -2,7 +2,7 @@
 % Please edit documentation in R/tsComplete.R
 \name{tsComplete}
 \alias{tsComplete}
-\title{tsComplete}
+\title{Completes a series with data from anothe series or by interpolating and/or repeating.}
 \usage{
 tsComplete(x, y, fill = "fill")
 }
@@ -27,7 +27,7 @@ a  <- c(NA, 1, 2,NA,NA, 5,NA)
 b  <- c(   NA,12,NA,13,NA,15,16)
 a2 <- ts(a,start=c(2000,1),freq=4)
 b2 <- ts(b,start=c(2000,2),freq=4)
-b3 <- zoo::zoo(b2)
+b3 <- zoo::as.zoo(b2)
 aa  <- tsComplete(a2)
 ab1 <- tsComplete(a2,b2)
 ab2 <- tsComplete(a2,b2,fill="na")

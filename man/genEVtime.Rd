@@ -2,7 +2,7 @@
 % Please edit documentation in R/genEVtime.R
 \name{genEVtime}
 \alias{genEVtime}
-\title{genEVtime}
+\title{Generates a vector of Eviews date formatted strings (eg.2008M12).}
 \usage{
 genEVtime(start, end = NULL, qobs = NULL)
 }

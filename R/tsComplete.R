@@ -1,5 +1,5 @@
 
-#' @title tsComplete
+#' @title Completes a series with data from anothe series or by interpolating and/or repeating.  
 #' @name tsComplete
 #'
 #' @description Function to complete a time-indexed series (either \code{ts} or \code{zoo}) by combining it with another series to avoid NAs. The function has a third argument "fill" to chose whether to leave NA, interpolate or repeate the last value when both vectors are missing.
@@ -18,36 +18,45 @@
 #' b  <- c(   NA,12,NA,13,NA,15,16)
 #' a2 <- ts(a,start=c(2000,1),freq=4)
 #' b2 <- ts(b,start=c(2000,2),freq=4)
-#' b3 <- zoo::zoo(b2)
+#' b3 <- zoo::as.zoo(b2)
 #' aa  <- tsComplete(a2)
 #' ab1 <- tsComplete(a2,b2)
 #' ab2 <- tsComplete(a2,b2,fill="na")
 #' ab3 <- tsComplete(a2,b3)
 #' ab4 <- tsComplete(a2,b3,fill="fill")
 
+# Possible future extension: support 'avoid' 
+# d1 <- c(1,0,NA,0,1)
+# d2 <- c(0,0,0,1,1)
+# d3 <- tsComplete(d1,d2,avoid=0)
+# d4 <- tsComplete(d1,d2,avoid=NA)
+
 tsComplete <- function( x,y,fill="fill" )
 {
-  if (missing(x)) stop("x must be supplied")
+  if (missing(x)) stop("x must be supplied as ts or zoo.")
   if (!is.ts(x) & !zoo::is.zoo(x)) stop("x must be a 'ts' or 'zoo' object.")
-  if (!missing(y)) if (!is.ts(y) & !zoo::is.zoo(y)) stop("y is optional but if supplied it must be a 'ts' or 'zoo' object.")
-  if (!missing(y)) if (is.ts(x) & is.ts(y)) if (tsp(x)[3]!=tsp(y)[3]) stop("Cannot combine TS with different frequencies.")
-  # TODO: check freq match for zoo objects
+  if (!missing(y)) if (!is.ts(y) & !zoo::is.zoo(y)) 
+    stop("y is optional but if supplied it must be a 'ts' or 'zoo' object.")
+  if (!missing(y)) if (frequency(x) != frequency(y)) 
+    stop("Cannot combine series with different frequencies.")
 
-  # if x not zoo but y is zoo then transform x into zoo
-  if (!zoo::is.zoo(x) & !missing(y))
-    if (zoo::is.zoo(y)) x <- zoo::zooreg(x, start=tsp(x)[1], freq=tsp(x)[3] )
-
-  # synchronize series
+  # if one argument is zoo ensure the other is too, that is: 
+  # (ts,ts) -> ts, (zoo,ts) or (ts,zoo) -> zoo and (zoo,zoo) -> zoo
+  if (!missing(y)) {
+   if (!zoo::is.zoo(x) & zoo::is.zoo(y)) x <- zoo::as.zoo(x) 
+   if (zoo::is.zoo(x) & !zoo::is.zoo(y)) y <- zoo::as.zoo(y) 
+  }
+  
+  # generate synchronized versions of the series, sx and sy 
   sx <- sync <- x
   lCombined <- FALSE
-  if (is.ts(x) & !missing(y)) { sync <- ts.union(x,y); lCombined <- TRUE }
-  if (zoo::is.zoo(x) & !missing(y)) { sync <- zoo::merge.zoo(x,y); lCombined <- TRUE }
-  #print(sync) # debug
-  if (lCombined) {
+  if (!missing(y)) {
+    if (is.ts(x)) sync <- ts.union(x,y) else sync <- zoo::merge.zoo(x,y)
     sx <- sync[,1]
-    if (!missing(y)) sy <- sync[,2]
+    sy <- sync[,2]
   }
-  # combine only if sx is NA and sy not NA
+  
+  # combine only where sx is NA and sy is not NA
   temp <- sx
   if (!missing(y)) {
     mask <- which(is.na(sx))
@@ -55,13 +64,17 @@ tsComplete <- function( x,y,fill="fill" )
   }
 
   # complete the remaining NA according to a user defined rule
-  fill.options <- c("na","fill","interpolate","repeat")
-  fill <- match.arg(fill,fill.options)
-  choice <- which(fill==fill.options)
-  # we rely on the fact that a ts object can implicitly be transformed into a zoo and back to ts
+  fill.options <- c("na","fill") #,"interpolate","repeat")
+  #fill <- match.arg(fill,fill.options)
+  #choice <- which(fill==fill.options)
+  choice <- pmatch( fill,fill.options )
+  if (is.na(choice)) 
+    stop(paste("'fill' must be one of the following: ",paste(fill.options,collapse=", "))) 
+  
+  # can we rely that ts object can implicitly be transformed into a zoo and back to ts ?
   res <- switch( choice, temp,  zoo::na.fill(temp, "extend"),
-                                zoo::na.approx(temp), zoo::na.locf(temp) )
-  # check that (ts,ts) -> ts, (zoo,ts) or (ts,zoo) -> zoo and (zoo,zoo) -> zoo
+                                zoo::na.approx(temp), 
+                                zoo::na.locf(temp) )
   res
 }
 

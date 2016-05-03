@@ -1,5 +1,5 @@
 
-#' @title genEVtime
+#' @title Generates a vector of Eviews date formatted strings (eg.2008M12).
 #' @name genEVtime
 #'
 #' @description Function to generate an Eviews-formatted vector of strings with time references.

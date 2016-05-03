@@ -2,32 +2,33 @@
 % Please edit documentation in R/dlog.R
 \name{dlog}
 \alias{dlog}
-\title{dlog}
+\title{Calculates the percentage variation of a time series.}
 \usage{
-dlog(x, convert = TRUE)
+dlog(data, lag = 1)
 }
 \arguments{
-\item{x}{Time series or vector to be converted to a \code{ts} object.}
+\item{data}{Time series or vector to be converted to a \code{ts} object.}
 
-\item{convert}{(Optional) Controls the automatia conversion to index before passing \code{log()}. Defaults to \code{TRUE}.}
+\item{lag}{(Optional) Number of lags to differentiate with \code{diff()}. Defaults to \code{1}.}
 }
 \value{
-Time series is the percentage variation with the first position as \code{0}.
+Time series of the percentage variation with the first position(s) as \code{NA}.
 }
 \description{
 Generates series of the percentage variation of the series data passed as parameter.
 }
 \details{
-It is implicit that data is index by time (time series). If observations are negative or zero, the \code{convert=TRUE} option allows the automatic transformation to an index before passing the \code{log()}.
+Data must be time indexed, either as \code{ts} or \code{zoo}. If observation(s) are negative or zero, the algorithm changes to the traditional percentage variation.
 }
 \examples{
-x <- ts( rnorm(10,mean=100) )
-dlx <- dlog(x)
+CPI <- ts( rnorm(10,mean=100) )
+Inflation <- dlCPI <- dlog( CPI )  # choose your naming convention!
 
-x1 <- ts( seq(-.3,.6,.1) )
-dlog( x1, convert=FALSE ) # causes NA when log(x) for x<=0
+x <- ts( seq(-.3,.6,.1) )
+dlx <- dlog( x ) # switch algorithm to avoid generating NAs 
+dl2x <- dlog( x, lag=2 ) 
 }
 \seealso{
-\code{\link{toIndex}}
+\code{\link{pVarToIndex}}
 }
 

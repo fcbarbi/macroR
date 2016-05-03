@@ -2,7 +2,7 @@
 % Please edit documentation in R/tsDummy.R
 \name{tsDummy}
 \alias{tsDummy}
-\title{tsDummy}
+\title{Generates a ts object for a dummy variable.}
 \usage{
 tsDummy(start, end, freq = 12, period = NULL, dates = NULL)
 }
@@ -17,16 +17,23 @@ tsDummy(start, end, freq = 12, period = NULL, dates = NULL)
 
 \item{dates}{(optional) List of discontinuous dates formated as for ex. \code{c(2008,12)}.}
 }
+\value{
+ts object with 1's and 0's.
+}
 \description{
 Generates a \code{ts} object filled with 0's, with 1's in a period or specific dates.
 }
 \details{
-
+Note that more than one period can be specified.
 }
 \examples{
-lehman    <- tsDummy( start=c(2000,1), end=c(2015,12), freq=12, period=list( c(2008,9), c(2008,12) )  )
+lehman <- tsDummy( start=c(2000,1), end=c(2015,12), freq=12, period=list( c(2008,9), c(2008,12) ))
+
 oilshocks <- tsDummy( start=c(1970,1), end=c(2015,12), freq=12,
                                          dates=list( c(1973,10), c(1979,12), c(1990,10), c(2008,6) )  )
 
+}
+\seealso{
+\code{\link{tsComplete}}
 }
 

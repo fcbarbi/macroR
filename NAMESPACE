@@ -2,8 +2,8 @@
 
 export(dlog)
 export(genEVtime)
-export(removeOutliers)
-export(toIndex)
+export(numToIndex)
+export(pVarToIndex)
 export(tsComplete)
 export(tsDummy)
 export(tsMapOutliers)
