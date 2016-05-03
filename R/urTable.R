@@ -35,11 +35,14 @@
 #' bad <- data.frame( var1=rnorm(100), var2=cumsum(rnorm(100)) ) 
 #' bad[seq(95,100),"var1"] <- bad[1,"var2"] <- bad[2,"var2"] <- NA
 #' dft3 <- urTable( bad )
+#' 
 
 urTable <- function( df ,tests=c("adf","pp","kpss"), order=1, file=NULL, format="csv" ){
 
   # TODO: include UR test for structural changes, maybe 
   # fUnitRoots::unitrootTest()
+  
+  DEBUG <- FALSE 
   
   # validate arguments 
   if (!(order %in% c(0,1,2))) stop("order must be 0, 1 or 2")
@@ -68,19 +71,29 @@ urTable <- function( df ,tests=c("adf","pp","kpss"), order=1, file=NULL, format=
   for (i in intorder)  
    for (test in tests)
     for (series in colnames(df)) { 
-      data <- ts(df[[series]])
-      data <- macror::tsComplete(data)
-      if (i>0) data <- diff(data,i)
-      col <- paste0(test,"(",i,")")  # cols = test(intorder) as in "adf(0)" or "kpss(2)"
-      if (test=="adf")   dft[series,col] <- tseries::adf.test(data)$p.value
-      if (test=="pp")    dft[series,col] <- tseries::pp.test(data)$p.value
-      if (test=="kpss")  dft[series,col] <- tseries::kpss.test(data)$p.value
+      data <- df[[series]]
+      if (is.numeric(data)){
+        data <- macror::tsComplete(ts(data))
+        if (i>0) data <- diff(data,i)
+        col <- paste0(test,"(",i,")")  # cols = test(order) as "kpss(2)"
+        
+        if (DEBUG)  print(paste(col,"of",series))
+        
+        if (test=="adf")   dft[series,col] <- tseries::adf.test(data)$p.value
+        if (test=="pp")    dft[series,col] <- tseries::pp.test(data)$p.value
+        if (test=="kpss")  dft[series,col] <- tseries::kpss.test(data)$p.value
+      }
+      # else warning(paste("series",series," is not numeric so it is skipped.")) 
+        
     }
 
-  # adf  <- "Augmented Dickey-Fuller Test"
-  # pp   <- "Phillips-Perron Unit Root Test"
-  # kpss <- "KPSS Test for Level Stationarity"
- 
+  legend <- rep("",4)
+  legend[1] <- c("Legend: Results are test p-values. Some observations may have been inputed.")
+  legend[2] <- c("adf is Augmented Dickey-Fuller Test with H0:series has unit root")
+  legend[3] <- c("pp is Phillips-Perron Unit Root Test with H0:series has unit root")
+  legend[4] <- c("kpss is KPSS Test for Level Stationarity  with H0:series is stationary")
+  print(legend)
+  
   if (!is.null(file)) {
     if (format=="latex") 
       print( xtable::xtable(dft), type="latex", file=file ) 
