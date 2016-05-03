@@ -29,6 +29,6 @@ dlx <- dlog( x ) # switch algorithm to avoid generating NAs
 dl2x <- dlog( x, lag=2 ) 
 }
 \seealso{
-\code{\link{pVarToIndex}}
+\code{\link{tsVarToIndex}}
 }
 
