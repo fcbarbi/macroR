@@ -9,9 +9,9 @@ pVarToIndex(x, base = 100, reference = 1)
 \arguments{
 \item{x}{Time series to be converted to index.}
 
-\item{base}{(optional, default is 100).}
+\item{base}{(optional) Default is 100.}
 
-\item{reference}{(optional, default is 1) Index of the observaton to be used as reference.}
+\item{reference}{(optional) Index of the observation to be used as reference. Default is 1 (first).}
 }
 \description{
 Compounds a percentage variation series into a 100 based index corresponding to the reference observation.

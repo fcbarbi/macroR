@@ -4,14 +4,14 @@
 \alias{numToIndex}
 \title{numToIndex}
 \usage{
-numToIndex(x, reference = 1, base = 100)
+numToIndex(x, base = 100, reference = 1)
 }
 \arguments{
 \item{x}{Time-indexed data to convert, must be a ts or zoo object.}
 
-\item{reference}{(Optional) Observation to be used as proportions are calculated.}
+\item{base}{(Optional) Default is 100.}
 
-\item{base}{(Optional) Defaults to 100.}
+\item{reference}{(Optional) Observation to be used as proportions are calculated.}
 }
 \value{
 Time series (ts or zoo) with the index.
