@@ -4,14 +4,14 @@
 \alias{tsDummy}
 \title{Generates a ts object for a dummy variable.}
 \usage{
-tsDummy(start, end, freq = 12, period = NULL, dates = NULL)
+tsDummy(start, end, frequency = 12, period = NULL, dates = NULL)
 }
 \arguments{
-\item{start}{Same as the \code{start} date in a \code{ts} object.}
+\item{start}{Same as the \code{start} option in a \code{ts} object.}
 
-\item{end}{Same as the \code{end} date in a \code{ts} object.}
+\item{end}{Same as the \code{end} option in a \code{ts} object.}
 
-\item{freq}{Same as the \code{frequency} date in a \code{ts} object.}
+\item{frequency}{Same as the \code{frequency} option in a \code{ts} object.}
 
 \item{period}{(optional) List with two elements: the starting and ending dates for the 1's formated as for ex. \code{c(2008,12)}.}
 

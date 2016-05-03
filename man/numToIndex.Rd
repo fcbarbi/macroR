@@ -2,7 +2,7 @@
 % Please edit documentation in R/numToIndex.R
 \name{numToIndex}
 \alias{numToIndex}
-\title{numToIndex}
+\title{Converts a numeric series to an index using the first observation as reference.}
 \usage{
 numToIndex(x, base = 100, reference = 1)
 }

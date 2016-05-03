@@ -1,4 +1,4 @@
-#' @title numToIndex
+#' @title Converts a numeric series to an index using the first observation as reference.
 #' @name numToIndex
 #' 
 #' @description Converts a numeric series to an index using the first observation as reference.
