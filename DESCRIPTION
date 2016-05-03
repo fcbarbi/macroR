@@ -7,8 +7,10 @@ Maintainer: Fernando Barbi <fcbarbi@gmail.com>
 Description: Functions for handling ts (time series) and zoo objects to: create index from percentage variation, create dummy series, complete series and generate Eviews-formatted dates.
 URL: https://github.com/fcbarbi/tsworkflow
 Depends: R (>= 3.2.4)
-License: GPL
-LazyData: true
-RoxygenNote: 5.0.1
 Imports: stats, zoo
 Suggests: testthat
+License: GPL (>=2)
+LazyData: true
+RoxygenNote: 5.0.1
+NeedsCompilation: No
+Repository: github
