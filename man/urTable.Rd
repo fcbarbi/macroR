@@ -41,5 +41,6 @@ dft2 <- urTable( data, tests=c("pp","kpss"), order=2, file="US.tex", format="lat
 bad <- data.frame( var1=rnorm(100), var2=cumsum(rnorm(100)) ) 
 bad[seq(95,100),"var1"] <- bad[1,"var2"] <- bad[2,"var2"] <- NA
 dft3 <- urTable( bad )
+
 }
 

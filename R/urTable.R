@@ -11,7 +11,7 @@
 #' @param order     Maximum order of integration to test, usually noted as I(?). It can be \code{c(0,1,2)}.
 # @param structure List of models to test, can be \code{c("c","ct","nc")}: \code{"c"} assumes model with intercept,"ct" assumes intercept and deterministic trend,"nc" assumes no intercept and no trend.
 #' @param file      (Optional) Filename to be generated according to \code{format}.
-#' @param format    (Optional) Format of the output table, can be \code{c("csv","latex")}. Defaults to \code{"txt"}.
+#' @param format    (Optional) Format of the output table, can be \code{c("csv","latex")}. Defaults to \code{"csv"}.
 #'
 #' @return A dataframe with the test results and a file (optional).
 #'
