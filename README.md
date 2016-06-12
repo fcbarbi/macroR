@@ -1,6 +1,16 @@
 
-## R Package "macror"
+## R package macroR
 
-Functions to streamline Macroeconomic time series analysis to: generate table with unit root tests, clean outliers, generate dummy series, complete missing observation series and generate Eviews-formatted dates.
+The package offers functions to streamline Macroeconomic time series analysis to:
+
+1. generate table with unit root tests, 
+
+2. detect and clean outliers, 
+
+3. generate dummy series, 
+
+4. complete missing observation series and 
+
+5. generate Eviews-formatted dates.
 
 fcbarbi AT gmail.com
